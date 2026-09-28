@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
-import { ChatOllama } from '@langchain/ollama';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { config } from '../config';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 @Injectable()
 export class ModelsService {
-  private llm = new ChatOllama({
-    model: config.ollama.chatModel,
-    baseUrl: config.ollama.baseUrl,
-    temperature: config.ollama.temperature,
+  private llm = new ChatGoogleGenerativeAI({
+    model: config.gemini.chatModel,
+    temperature: config.gemini.temperature,
   });
 
   // ── 方式一：基础调用（等待完整回答）────────────────────

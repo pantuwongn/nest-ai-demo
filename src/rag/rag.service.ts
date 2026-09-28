@@ -2,7 +2,10 @@
 // 方案一：MemoryVectorStore（内存向量库）
 
 import { Injectable } from '@nestjs/common';
-import { ChatOllama, OllamaEmbeddings } from '@langchain/ollama';
+import {
+  ChatGoogleGenerativeAI,
+  GoogleGenerativeAIEmbeddings,
+} from '@langchain/google-genai';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
@@ -13,17 +16,14 @@ import { config } from '../config';
 
 @Injectable()
 export class RagService {
-  private llm = new ChatOllama({
-    model: config.ollama.chatModel,
-    baseUrl: config.ollama.baseUrl,
+  private llm = new ChatGoogleGenerativeAI({
+    model: config.gemini.chatModel,
     temperature: 0.1,
-    think: false,
-    numPredict: 1024,
+    maxOutputTokens: 1024,
   });
 
-  private embeddings = new OllamaEmbeddings({
-    model: config.ollama.embedModel, // mxbai-embed-large
-    baseUrl: config.ollama.baseUrl,
+  private embeddings = new GoogleGenerativeAIEmbeddings({
+    model: config.gemini.embedModel,
   });
 
   // 内存向量库实例（null = 未初始化）

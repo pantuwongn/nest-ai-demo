@@ -1,7 +1,7 @@
 // src/prompts/prompts.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { ChatOllama } from '@langchain/ollama';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import {
   ChatPromptTemplate,
   PromptTemplate,
@@ -12,10 +12,9 @@ import { config } from '../config';
 
 @Injectable()
 export class PromptsService {
-  private llm = new ChatOllama({
-    model: config.ollama.chatModel,
-    baseUrl: config.ollama.baseUrl,
-    temperature: config.ollama.temperature,
+  private llm = new ChatGoogleGenerativeAI({
+    model: config.gemini.chatModel,
+    temperature: config.gemini.temperature,
   });
 
   // ── ChatPromptTemplate：多消息对话模板（最常用）─────────

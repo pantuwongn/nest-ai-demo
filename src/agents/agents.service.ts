@@ -1,7 +1,7 @@
 // src/agents/agents.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { ChatOllama } from '@langchain/ollama';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { tool } from '@langchain/core/tools';
 import { z } from 'zod';
 import {
@@ -16,12 +16,10 @@ import { config } from '../config';
 
 @Injectable()
 export class AgentsService {
-  private llm = new ChatOllama({
-    model: config.ollama.chatModel,
-    baseUrl: config.ollama.baseUrl,
+  private llm = new ChatGoogleGenerativeAI({
+    model: config.gemini.chatModel,
     temperature: 0.1, // 低温度，让工具调用决策更稳定
-    think: false,
-    numPredict: 1024,
+    maxOutputTokens: 1024,
   });
 
   // ══════════════════════════════════════════════════════

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
-import { ChatOllama } from '@langchain/ollama';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import {
   HumanMessage,
   AIMessage,
@@ -11,10 +11,9 @@ import { config } from '../config';
 
 @Injectable()
 export class MemoryService {
-  private llm = new ChatOllama({
-    model: config.ollama.chatModel,
-    baseUrl: config.ollama.baseUrl,
-    temperature: config.ollama.temperature,
+  private llm = new ChatGoogleGenerativeAI({
+    model: config.gemini.chatModel,
+    temperature: config.gemini.temperature,
   });
 
   // 会话存储：sessionId → 消息历史数组
